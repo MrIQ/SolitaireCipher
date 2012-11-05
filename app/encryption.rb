@@ -1,10 +1,7 @@
 class Encryption
-  def initialize(message)
-    @message = message
-  end
 
-  def to_pre_treat_array
-    first_step_string = @message.gsub(/[^a-zA-Z]/, "").upcase
+  def to_pre_treat_array(message)
+    first_step_string = message.gsub(/[^a-zA-Z]/, "").upcase
     first_step_string.ljust(chars_need_to_pad(first_step_string), "X").split(//).each_slice(5).inject([]) { |res, sub_array| res << sub_array }
   end
 
