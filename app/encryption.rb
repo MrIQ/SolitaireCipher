@@ -2,11 +2,15 @@ class Encryption
 
   def to_pre_treat_array(message)
     first_step_string = message.gsub(/[^a-zA-Z]/, "").upcase
-    first_step_string.ljust(chars_need_to_pad(first_step_string), "X").split(//).each_slice(5).inject([]) { |res, sub_array| res << sub_array }
+    first_step_string.ljust(chars_need_to_pad(first_step_string), "X")
   end
 
-  def convert_into_numbers(code_array)
-    code_array.inject([]) { |num_array,sub_array| num_array<<sub_array.join.codepoints.inject([]) {|code_num, c| code_num<<c-65+1 } }
+  def convert_into_numbers(message_str)
+    message_str.codepoints.collect {|c| c-65+1 }
+  end
+
+  def combine_number_arrays(first_array, second_array)
+    [first_array, second_array].transpose.map {|x| x.reduce(:+)}.map { |x| x%26 }
   end
 
   private
